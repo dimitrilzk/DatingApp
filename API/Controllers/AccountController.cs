@@ -1,6 +1,7 @@
 ﻿using API.Data;
 using API.DTOs;
 using API.Entities;
+using API.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
@@ -8,7 +9,7 @@ using System.Text;
 
 namespace API.Controllers
 {
-    public class AccountController(DataContext context) : BaseApiController
+    public class AccountController(DataContext context, ITokenService tokenService) : BaseApiController
     {
         //In the API Controllers we have an[ApiController] attribute.One of the features of this attribute
         //is automatic property binding to the parameters of the endpoints.The basic rules are if the argument
@@ -16,7 +17,7 @@ namespace API.Controllers
         //it will look in the body of the request to match this.  This can be overridden if needed
         //by supplying the [FromQuery] or[FromBody] attributes
         [HttpPost("register")] // api/account/register
-        public async Task<ActionResult<AppUser>> Register(RegisterDto registerDto) // ep33
+        public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto) // ep33
         // di default i parametri passati come stringhe vengono recuperati dalla query string
         // oppure lo si puo specificare: Register([FromQuery]string username, string password)
         // oppure si può indicare che i parametri sono da cercare nel body: Register([FromBody]string username, string password)
@@ -41,11 +42,15 @@ namespace API.Controllers
             context.Users.Add(user);
             await context.SaveChangesAsync();
 
-            return user;
+            return new UserDto
+            {
+                Username = user.UserName,
+                Token = tokenService.CreateToken(user)
+            };
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<AppUser>> Login(LoginDto loginDto)
+        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
             var user = await context.Users.FirstOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower());
 
@@ -66,7 +71,11 @@ namespace API.Controllers
                 }
             }
 
-            return user;
+            return new UserDto
+            {
+                Username = user.UserName,
+                Token = tokenService.CreateToken(user)
+            };
         }
         private async Task<bool> UserExist(string username)
         {
