@@ -11,7 +11,7 @@ namespace API.Controllers;
 //[Route("api/[controller]")] // /api/users
 public class UsersController(DataContext context) : BaseApiController
 {
-    [AllowAnonymous]//di defaulte è allow anonymous
+    [AllowAnonymous]// di defaulte è allow anonymous
     [HttpGet]
     public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
     {
