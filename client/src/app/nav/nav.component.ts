@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { AccountService } from '../_services/account.service';
 
 @Component({
   selector: 'app-nav',
@@ -9,10 +10,18 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './nav.component.css',
 })
 export class NavComponent {
+  private accountService = inject(AccountService);
+  loggedIn = false;
   //spiegazione [(ngModel)] 46: biding bidirezionale [()] se cambio da ts si modifica in html e viceversa
   model: any = {};
 
   login() {
-    console.log(this.model);
+    this.accountService.login(this.model).subscribe({
+      next: (response) => {
+        console.log(response);
+        this.loggedIn = true;
+      },
+      error: (error) => console.log(error),
+    });
   }
 }
