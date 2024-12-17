@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavComponent } from "./nav/nav.component";
+import { AccountService } from './_services/account.service';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,7 @@ import { NavComponent } from "./nav/nav.component";
 export class AppComponent implements OnInit {
   //questo è un altro modo di fare la dep injection(alternativo al farlo nel costruttore)
   http = inject(HttpClient);
+  private accountService = inject(AccountService);
   title = 'DatingApp';
   users: any;
   
@@ -21,6 +23,18 @@ export class AppComponent implements OnInit {
   // constructor(private httpClient: HttpClient){}
 
   ngOnInit(): void {
+    this.getUsers();
+    this.setCurrenUser();
+  }
+
+  setCurrenUser() {
+    const userString = localStorage.getItem('user');
+    if (!userString) return;
+    const user = JSON.parse(userString);
+    this.accountService.currentUser.set(user);
+  }
+
+  getUsers(){
     this.http.get('https://localhost:5001/api/users').subscribe({
       // next: () => {},
       next: response => this.users = response,

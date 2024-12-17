@@ -11,8 +11,8 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
   styleUrl: './nav.component.css',
 })
 export class NavComponent {
-  private accountService = inject(AccountService);
-  loggedIn = false;
+  accountService = inject(AccountService);//prima era privato togliendo il private la variabiel loggedIn non serve più
+  // loggedIn = false;
   //spiegazione [(ngModel)] 46: biding bidirezionale [()] se cambio da ts si modifica in html e viceversa
   model: any = {};
 
@@ -20,13 +20,14 @@ export class NavComponent {
     this.accountService.login(this.model).subscribe({
       next: (response) => {
         console.log(response);
-        this.loggedIn = true;
+        // this.loggedIn = true;
       },
       error: (error) => console.log(error),
     });
   }
 
   logout(){
-    this.loggedIn = false;
+    // this.loggedIn = false;
+    this.accountService.logout();
   }
 }
