@@ -11,7 +11,6 @@ import { FormsModule } from '@angular/forms';
 export class RegisterComponent {
   model: any = {};
 
-  //register
   register() {
     console.log(this.model);
   }
