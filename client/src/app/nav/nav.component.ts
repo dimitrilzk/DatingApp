@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AccountService } from '../_services/account.service';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-nav',
@@ -13,6 +13,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class NavComponent {
   accountService = inject(AccountService);//prima era privato togliendo il private la variabiel loggedIn non serve più
+  private router = inject(Router);
   // loggedIn = false;
   //spiegazione [(ngModel)] 46: biding bidirezionale [()] se cambio da ts si modifica in html e viceversa
   model: any = {};
@@ -20,8 +21,8 @@ export class NavComponent {
   login() {
     this.accountService.login(this.model).subscribe({
       next: (response) => {
-        console.log(response);
         // this.loggedIn = true;
+        this.router.navigateByUrl('/members'); //navigateByUrl in realtà ritorna una promise e si puo decidere cosa fare se ritorna true o false
       },
       error: (error) => console.log(error),
     });
@@ -30,5 +31,6 @@ export class NavComponent {
   logout(){
     // this.loggedIn = false;
     this.accountService.logout();
+    this.router.navigateByUrl('/');
   }
 }
