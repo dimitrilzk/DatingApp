@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { AccountService } from '../_services/account.service';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-nav',
@@ -14,6 +15,7 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 export class NavComponent {
   accountService = inject(AccountService);//prima era privato togliendo il private la variabiel loggedIn non serve più
   private router = inject(Router);
+  private toastr = inject(ToastrService);
   // loggedIn = false;
   //spiegazione [(ngModel)] 46: biding bidirezionale [()] se cambio da ts si modifica in html e viceversa
   model: any = {};
@@ -24,7 +26,9 @@ export class NavComponent {
         // this.loggedIn = true;
         this.router.navigateByUrl('/members'); //navigateByUrl in realtà ritorna una promise e si puo decidere cosa fare se ritorna true o false
       },
-      error: (error) => console.log(error),
+      error: (error) => {
+        this.toastr.error(error.error, 'Login Error');
+      },
     });
   }
 
