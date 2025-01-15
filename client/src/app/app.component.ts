@@ -21,7 +21,6 @@ export class AppComponent implements OnInit {
   }
 
   setCurrenUser() {
-    //todo fk
     const userString = localStorage.getItem('user');
     if (!userString) return;
     const user = JSON.parse(userString);
