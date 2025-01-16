@@ -1,10 +1,11 @@
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
   <div class="container">
     <a routerLink="/" class="navbar-brand">Dating App</a>
 
     <!-- per usare il signal bisogna usare le parentesi currentUser() 52-->
-    @if (true){
+
     <ul class="navbar-nav me-auto mb-2 mb-md-0">
+      @if (accountService.currentUser()){
       <li class="nav-item">
         <a routerLink="/members" routerLinkActive="active" class="nav-link">Matches</a>
       </li>
@@ -14,12 +15,14 @@
       <li class="nav-item">
         <a routerLink="/messages" routerLinkActive="active" class="nav-link">Messages</a>
       </li>
+      }
     </ul>
-    }
 
     @if (accountService.currentUser()){
     <div dropdown class="dropdown">
-      <a dropdownToggle class="dropdown-toggle text-light text-decoration-none">Welcome user</a>
+      <a dropdownToggle class="dropdown-toggle text-light text-decoration-none">
+        Welcome {{accountService.currentUser()?.username | titlecase}}
+      </a>
       <div *dropdownMenu class="dropdown-menu">
         <a class="dropdown-item">Edit profile</a>
         <div class="dropdown-divider"></div>
@@ -33,7 +36,7 @@
       <input name="username" [(ngModel)]="model.username" class="form-control me-2" placeholder="Username" />
       <input name="password" [(ngModel)]="model.password" class="form-control me-2" placeholder="Password"
         type="password" />
-      <button class="btn btn-outline-success" type="submit">Login</button>
+      <button class="btn btn-success" type="submit">Login</button>
     </form>
     }
   </div>
