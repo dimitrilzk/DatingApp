@@ -17,6 +17,7 @@ export class AppComponent implements OnInit {
   //angular si sposta sempre più alla programmazione funzionale cit. => http = inject(HttpClient);
 
   ngOnInit(): void {
+    //fix
     this.setCurrenUser();
   }
 
