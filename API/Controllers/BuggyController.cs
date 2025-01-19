@@ -30,15 +30,22 @@ namespace API.Controllers
         [HttpGet("server-error")]
         public ActionResult<AppUser> GetServerError()
         {
-            var thing = context.Users.Find(-1) ?? throw new Exception("A bad thing has happened");
+            //anziche usare un try catch ovunque si puo creare un middleware che gestisce gli errori ep.71
+            //try
+            //{
+                var thing = context.Users.Find(-1) ?? throw new Exception("A bad thing has happened");
 
-            return thing;
+                return thing;
+            //}
+            //catch (Exception ex)
+            //{
+            //    return StatusCode(500, "Computer says no!");
+            //}
         }
 
         [HttpGet("bad-request")]
         public ActionResult<string> GetBadRequest()
         {
-
             return BadRequest("This was not a good request");
         }
     }
