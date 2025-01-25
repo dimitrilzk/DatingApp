@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { NavComponent } from "./nav/nav.component";
+import { NavComponent } from './nav/nav.component';
 import { AccountService } from './_services/account.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { AccountService } from './_services/account.service';
   standalone: true,
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  imports: [RouterOutlet, NavComponent]
+  imports: [RouterOutlet, NavComponent],
 })
 export class AppComponent implements OnInit {
   //questo è un altro modo di fare la dep injection(alternativo al farlo nel costruttore)
@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
   //angular si sposta sempre più alla programmazione funzionale cit. => http = inject(HttpClient);
 
   ngOnInit(): void {
-    this.setCurrenUser();//todo
+    this.setCurrenUser();
   }
 
   setCurrenUser() {
