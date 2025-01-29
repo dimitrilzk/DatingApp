@@ -28,25 +28,26 @@ namespace API.Controllers
                 return BadRequest("Username is taken");
             }
 
-            using var hmac = new HMACSHA512(); // usare lo using permette ri risparmiare memoria in quanto
-            //appena si avrà finito di usare l'istanza della classe istanziata: new HMACSHA512() il metodo dispose
-            //verrà chiamato e si occuperà di chiudere immediatamente lo scope e quindi non consumerà più memoria
+            return Ok();
+            //using var hmac = new HMACSHA512(); // usare lo using permette ri risparmiare memoria in quanto
+            ////appena si avrà finito di usare l'istanza della classe istanziata: new HMACSHA512() il metodo dispose
+            ////verrà chiamato e si occuperà di chiudere immediatamente lo scope e quindi non consumerà più memoria
 
-            var user = new AppUser
-            {
-                UserName = registerDto.Username.ToLower(),
-                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
-                PasswordSalt = hmac.Key
-            };
+            //var user = new AppUser
+            //{
+            //    UserName = registerDto.Username.ToLower(),
+            //    PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
+            //    PasswordSalt = hmac.Key
+            //};
 
-            context.Users.Add(user);
-            await context.SaveChangesAsync();
+            //context.Users.Add(user);
+            //await context.SaveChangesAsync();
 
-            return new UserDto
-            {
-                Username = user.UserName,
-                Token = tokenService.CreateToken(user)
-            };
+            //return new UserDto
+            //{
+            //    Username = user.UserName,
+            //    Token = tokenService.CreateToken(user)
+            //};
         }
 
         [HttpPost("login")]
