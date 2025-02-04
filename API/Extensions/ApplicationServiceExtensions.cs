@@ -17,6 +17,7 @@ namespace API.Extensions
             services.AddCors();
             //AddSingleton AddTransient AddScoped - 38
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IUserRepository, UserRepository>();//ep 86 (end)
 
             return services;
         }
