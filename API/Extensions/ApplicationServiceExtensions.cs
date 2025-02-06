@@ -18,6 +18,7 @@ namespace API.Extensions
             //AddSingleton AddTransient AddScoped - 38
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUserRepository, UserRepository>();//ep 86 (end)
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             return services;
         }
