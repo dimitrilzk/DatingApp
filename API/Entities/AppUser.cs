@@ -20,8 +20,9 @@ public class AppUser
     public required string Country { get; set; }
     public List<Photo> Phots { get; set; } = [];
 
-    public int GetAge()
-    {
-        return DateOfBirth.CalculateAge();
-    }
+    //spostato in automapper ep 92
+    //public int GetAge()
+    //{
+    //    return DateOfBirth.CalculateAge();
+    //}
 }

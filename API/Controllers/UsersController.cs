@@ -11,18 +11,15 @@ namespace API.Controllers;
 //[ApiController]
 //[Route("api/[controller]")] // /api/users
 [Authorize]
-public class UsersController(IUserRepository userRepository, IMapper mapper) : BaseApiController //remove DataContext an use IUserRepository ep 87
+public class UsersController(IUserRepository userRepository) : BaseApiController //remove DataContext an use IUserRepository ep 87
 {
     //[AllowAnonymous]// di defaulte è allow anonymous
     [HttpGet]
     public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
     {
-        //var users = await context.Users.ToListAsync();
-        var users = await userRepository.GetUsersAsync();
+        var users = await userRepository.GetMembersAsync();
 
-        var usersToReturn = mapper.Map<IEnumerable<MemberDto>>(users);
-
-        return Ok(usersToReturn);
+        return Ok(users);
     }
 
     //[Authorize]
@@ -32,10 +29,10 @@ public class UsersController(IUserRepository userRepository, IMapper mapper) : B
     {
         //var user = await context.Users.FindAsync(id);
 
-        var user = await userRepository.GetUserByUsernameAsync(username);
+        var user = await userRepository.GetMemberByUsernameAsync(username);
 
         if (user == null) return NotFound();
 
-        return mapper.Map<MemberDto>(user);
+        return user;
     }
 }
