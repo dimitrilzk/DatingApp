@@ -12,7 +12,7 @@ namespace API.Helpers
             CreateMap<AppUser, MemberDto>()
                 .ForMember(d => d.Age, o => o.MapFrom(s => s.DateOfBirth.CalculateAge()))//spiegazione ep 92
                 .ForMember(d => d.PhotoUrl, 
-                o => o.MapFrom(s => s.Phots.FirstOrDefault(f => f.IsMain)!.Url)); // ! spiegazione ep 91
+                o => o.MapFrom(s => s.Photos.FirstOrDefault(f => f.IsMain)!.Url)); // ! spiegazione ep 91
             CreateMap<Photo, PhotoDto>();
         }
     }

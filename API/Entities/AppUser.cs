@@ -18,7 +18,7 @@ public class AppUser
     public string? LookingFor { get; set; }
     public required string City { get; set; }
     public required string Country { get; set; }
-    public List<Photo> Phots { get; set; } = [];
+    public List<Photo> Photos { get; set; } = [];
 
     //spostato in automapper ep 92
     //public int GetAge()
