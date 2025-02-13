@@ -11,6 +11,7 @@ export class MembersService {
   private http = inject(HttpClient);
   private accountService = inject(AccountService);//account service store the auth token
   baseUrl = environment.apiUrl; //proper way to do this ep 97
+  //todo
 
   // constructor() { } dont need constructor because we using function version of injection private http = inject(HttpClient);
 
