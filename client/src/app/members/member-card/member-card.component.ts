@@ -6,7 +6,9 @@ import { Member } from '../../_models/member';
   standalone: true,
   imports: [],
   templateUrl: './member-card.component.html',
-  styleUrl: './member-card.component.css'
+  styleUrl: './member-card.component.css',
+  // encapsulation: ViewEncapsulation.None 
+  //encapsulation none toglie il tag univoco nell'html dell'elemento generato e quindi il css di questo comp diventa globale
 })
 export class MemberCardComponent {
   //questo è il modo nuovo di riceve parametri in input da comp padri 
