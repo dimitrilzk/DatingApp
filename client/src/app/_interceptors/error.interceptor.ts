@@ -9,7 +9,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   const toastr = inject(ToastrService);
 
   return next(req).pipe(
-    catchError(error => {
+    catchError((error) => {
       if (error) {
         switch (error.status) {
           case 400:
@@ -32,7 +32,9 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
             router.navigateByUrl('/not-found');
             break;
           case 500:
-            const navigationExtras: NavigationExtras = { state: { error: error.error } };
+            const navigationExtras: NavigationExtras = {
+              state: { error: error.error },
+            };
             router.navigateByUrl('/server-error', navigationExtras);
             break;
           default:
@@ -42,5 +44,5 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       }
       throw error;
     })
-  )
+  );
 };
