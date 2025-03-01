@@ -10,33 +10,33 @@ import { environment } from '../../environments/environment';
 export class AccountService {
   //47
   private http = inject(HttpClient);
-  baseUrl = environment.apiUrl;
+  baseUrl = environment.apiUrl; //todo
   currentUser = signal<User | null>(null);
 
   login(model: any) {
     return this.http.post<User>(this.baseUrl + 'account/login', model).pipe(
-      map(user => {
-        if (user){
+      map((user) => {
+        if (user) {
           localStorage.setItem('user', JSON.stringify(user));
-          this.currentUser.set(user);//setting signal 51-52
+          this.currentUser.set(user); //setting signal 51-52
         }
       })
-    )
+    );
   }
 
   register(model: any) {
     return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
-      map(user => {
-        if (user){
+      map((user) => {
+        if (user) {
           localStorage.setItem('user', JSON.stringify(user));
           this.currentUser.set(user);
-        };
+        }
         return user;
       })
-    )
+    );
   }
 
-  logout(){
+  logout() {
     localStorage.removeItem('user');
     this.currentUser.set(null);
   }
