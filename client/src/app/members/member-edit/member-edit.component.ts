@@ -59,4 +59,8 @@ export class MemberEditComponent implements OnInit {
       },
     });
   }
+
+  onMemberChange(event: Member) {
+    this.member = event; //aggiorno l'utente tramite evento creato in photo-editor
+  }
 }
