@@ -39,4 +39,10 @@ export class MembersService {
       })
     );
   }
+
+  setMainPhoto(photoId: number) {
+    console.log('photo id', photoId);
+    console.log('base url', this.baseUrl);
+    return this.http.put(this.baseUrl + 'users/set-main-photo/' + photoId, {});
+  }
 }
