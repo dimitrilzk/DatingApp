@@ -38,15 +38,14 @@ Progetto dimostrativo che implementa un'applicazione web moderna con funzionalit
 ## 📦 Come Iniziare
 1. Clona il repository
 2. Configura connection string in `appsettings.json`
-3. Esegui migration EF Core: dotnet ef database update
-4. Avvia backend: dotnet run
-5. Installa dipendenze Angular: npm install
-6. Lancia frontend: ng serve
+3. Esegui migration EF Core: `dotnet ef database update`
+4. Avvia backend: `dotnet run`
+5. Installa dipendenze Angular: `npm install`
+6. Lancia frontend: `ng serve`
 
 ## 🔧 Strumenti di Sviluppo
 - Visual Studio Code con estensioni .NET/Angular
 - Postman per test API
-- Swagger per documentazione endpoint
 - Git per version control
 
 ## 📚 Risorse Utili
