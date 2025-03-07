@@ -3,6 +3,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Member } from '../_models/member';
 import { of, tap } from 'rxjs';
+import { Photo } from '../_models/photo';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,7 @@ export class MembersService {
   baseUrl = environment.apiUrl; //proper way to do this ep 97
   members = signal<Member[]>([]);
 
-  // constructor() { } dont need constructor because we using function version of injection private http = inject(HttpClient);
+  // constructor() { } dont need constructor because we using private http = inject(HttpClient);
 
   getMembers() {
     return this.http.get<Member[]>(this.baseUrl + 'users').subscribe({
@@ -40,9 +41,21 @@ export class MembersService {
     );
   }
 
-  setMainPhoto(photoId: number) {
-    console.log('photo id', photoId);
-    console.log('base url', this.baseUrl);
-    return this.http.put(this.baseUrl + 'users/set-main-photo/' + photoId, {});
+  setMainPhoto(photo: Photo) {
+    return this.http
+      .put(this.baseUrl + 'users/set-main-photo/' + photo.id, {})
+      .pipe(
+        //131 m 8:30
+        tap(() => {
+          this.members.update((members) =>
+            members.map((m) => {
+              if (m.photos.includes(photo)) {
+                m.photoUrl = photo.url;
+              }
+              return m;
+            })
+          );
+        })
+      );
   }
 }
