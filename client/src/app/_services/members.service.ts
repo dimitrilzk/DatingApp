@@ -50,7 +50,28 @@ export class MembersService {
           this.members.update((members) =>
             members.map((m) => {
               if (m.photos.includes(photo)) {
-                m.photoUrl = photo.url;
+                //è meglio creare un nuovo oggetto anziché modificare/mutare quello esistente
+                return { ...m, photoUrl: photo.url }; // Nuovo oggetto
+                // m.photoUrl = photo.url; //evito la mutazione
+                //principio di immutabilità, meglio creare un nuovo oggetto
+              }
+              return m;
+            })
+          );
+        })
+      );
+  }
+
+  deletePhoto(photo: Photo) {
+    return this.http
+      .delete(this.baseUrl + 'users/delete-photo/' + photo.id)
+      .pipe(
+        //133 m 3:30
+        tap(() => {
+          this.members.update((members) =>
+            members.map((m) => {
+              if (m.photos.includes(photo)) {
+                m.photos = m.photos.filter((x) => x.id !== photo.id);
               }
               return m;
             })
