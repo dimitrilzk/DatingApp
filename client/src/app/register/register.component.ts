@@ -1,16 +1,16 @@
-import { Component, inject, input, output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, inject, OnInit, output } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AccountService } from '../_services/account.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule],
+  imports: [ReactiveFormsModule], //ep 136
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   //passare dati da componente padre (home) a figlio (register) l.55 (vecchio modo)
   // @Input() usersFromHomeComponent: any;
   //il nuovo modo per passare dati da padre a figlio è questo: disponibile da verisone 17.3 di angular
@@ -24,15 +24,29 @@ export class RegisterComponent {
   private accountService = inject(AccountService);
   private toastr = inject(ToastrService);
   model: any = {};
+  registerForm: FormGroup = new FormGroup({});
+
+  ngOnInit(): void {
+    this.initializeForm();
+  }
+
+  initializeForm() {
+    this.registerForm = new FormGroup({
+      username: new FormControl(),
+      password: new FormControl(),
+      confirmPassword: new FormControl(),
+    });
+  }
 
   register() {
-    this.accountService.register(this.model).subscribe({
-      next: response => {
-        console.log(response);
-        this.cancel();
-      },
-      error: error => this.toastr.error(error.error, 'Registration Error')
-    })
+    console.log(this.registerForm.value);
+    // this.accountService.register(this.model).subscribe({
+    //   next: (response) => {
+    //     console.log(response);
+    //     this.cancel();
+    //   },
+    //   error: (error) => this.toastr.error(error.error, 'Registration Error'),
+    // });
   }
 
   cancel() {
