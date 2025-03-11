@@ -1,54 +1,25 @@
 <form [formGroup]="registerForm" (ngSubmit)="register()" autocomplete="off">
   <h2 class="text-center text-primary">Sign up</h2>
   <hr />
-  <div class="mb-3 form-floating">
-    <input
-      [class.is-invalid]="
-        registerForm.get('username')?.errors &&
-        registerForm.get('username')?.touched
-      "
-      type="text"
-      class="form-control"
-      formControlName="username"
-      placeholder="Username"
-    />
-    <label>Username</label>
-    <div class="invalid-feedback text-start">Please enter a username</div>
-  </div>
+  <!-- 140 m 12 -->
+  <app-text-input
+    [formControlName]="'username'"
+    lable="Usename"
+  ></app-text-input>
 
-  <div class="mb-3 form-floating">
-    <input
-      [class.is-invalid]="
-        registerForm.get('password')?.errors &&
-        registerForm.get('password')?.touched
-      "
-      type="password"
-      class="form-control"
-      formControlName="password"
-      placeholder="Password"
-    />
-    <label>Password</label>
-    <div
-      *ngIf="registerForm.get('password')?.hasError('required')"
-      class="invalid-feedback text-start"
-    >
-      Please enter a password
-    </div>
-    <div
-      *ngIf="registerForm.get('password')?.hasError('minlength')"
-      class="invalid-feedback text-start"
-    >
-      Pssword must be at least 4 characters
-    </div>
-    <div
-      *ngIf="registerForm.get('password')?.hasError('maxlength')"
-      class="invalid-feedback text-start"
-    >
-      Password must be at most 8 characters
-    </div>
-  </div>
+  <app-text-input
+    [formControlName]="'password'"
+    lable="Password"
+    [type]="'password'"
+  ></app-text-input>
 
-  <div class="mb-3 form-floating">
+  <app-text-input
+    [formControlName]="'confirmPassword'"
+    lable="Confirm password"
+    [type]="'password'"
+  ></app-text-input>
+
+  <!-- <div class="mb-3 form-floating">
     <input
       [class.is-invalid]="
         registerForm.get('confirmPassword')?.errors &&
@@ -59,9 +30,9 @@
       formControlName="confirmPassword"
       placeholder="Confirm Password"
     />
-    <label>Confirm Password</label>
-    <!-- spiegazione 139 7:30 -->
-    <div
+    <label>Confirm Password</label> -->
+  <!-- spiegazione 139 7:30 -->
+  <!-- <div
       *ngIf="registerForm.get('confirmPassword')?.hasError('required')"
       class="invalid-feedback text-start"
     >
@@ -73,7 +44,8 @@
     >
       Confirm password must match password
     </div>
-  </div>
+  </div> -->
+
   <div class="form-group text-center">
     <button class="btn btn-success me-2" type="submit">Register</button>
     <button class="btn btn-default me-2" (click)="cancel()" type="button">

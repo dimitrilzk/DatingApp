@@ -10,11 +10,12 @@ import {
 import { AccountService } from '../_services/account.service';
 import { ToastrService } from 'ngx-toastr';
 import { JsonPipe, NgIf } from '@angular/common';
+import { TextInputComponent } from '../_forms/text-input/text-input.component';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule, JsonPipe, NgIf], //ep 136
+  imports: [ReactiveFormsModule, JsonPipe, NgIf, TextInputComponent], //ep 136
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })

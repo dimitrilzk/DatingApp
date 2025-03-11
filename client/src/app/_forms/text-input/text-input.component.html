@@ -6,7 +6,7 @@
     [formControl]="control"
     placeholder="{{ lable() }}"
   />
-  <label>Password</label>
+  <label>{{ lable() }}</label>
   <div *ngIf="control.hasError('required')" class="invalid-feedback text-start">
     Please enter a {{ lable() }}
   </div>
@@ -23,5 +23,11 @@
   >
     {{ lable() }} must be at most
     {{control.errors?.['maxlength'].requiredLength}} characters
+  </div>
+  <div
+    *ngIf="control.hasError('isMatching')"
+    class="invalid-feedback text-start"
+  >
+    Password do not match
   </div>
 </div>
