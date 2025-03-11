@@ -1,6 +1,7 @@
 import { Component, inject, OnInit, output } from '@angular/core';
 import {
   AbstractControl,
+  FormBuilder,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
@@ -9,13 +10,13 @@ import {
 } from '@angular/forms';
 import { AccountService } from '../_services/account.service';
 import { ToastrService } from 'ngx-toastr';
-import { JsonPipe, NgIf } from '@angular/common';
+import { JsonPipe } from '@angular/common';
 import { TextInputComponent } from '../_forms/text-input/text-input.component';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule, JsonPipe, NgIf, TextInputComponent], //ep 136
+  imports: [ReactiveFormsModule, JsonPipe, TextInputComponent], //ep 136
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
@@ -32,6 +33,7 @@ export class RegisterComponent implements OnInit {
 
   private accountService = inject(AccountService);
   private toastr = inject(ToastrService);
+  private fb = inject(FormBuilder);
   model: any = {};
   registerForm: FormGroup = new FormGroup({});
 
@@ -40,17 +42,17 @@ export class RegisterComponent implements OnInit {
   }
 
   initializeForm() {
-    this.registerForm = new FormGroup({
-      username: new FormControl('', Validators.required),
-      password: new FormControl('', [
-        Validators.required,
-        Validators.minLength(4),
-        Validators.maxLength(8),
-      ]),
-      confirmPassword: new FormControl('', [
-        Validators.required,
-        this.matchValues('password'),
-      ]),
+    //switch to form builder 141
+    this.registerForm = this.fb.group({
+      username: ['', Validators.required],
+      password: [
+        '',
+        [Validators.required, Validators.minLength(4), Validators.maxLength(8)],
+      ],
+      confirmPassword: [
+        '',
+        [Validators.required, this.matchValues('password')],
+      ],
     });
     this.registerForm.controls['password'].valueChanges.subscribe({
       next: () =>
