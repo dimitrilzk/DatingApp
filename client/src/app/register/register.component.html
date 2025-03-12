@@ -1,10 +1,51 @@
 <form [formGroup]="registerForm" (ngSubmit)="register()" autocomplete="off">
   <h2 class="text-center text-primary">Sign up</h2>
   <hr />
+
+  <div class="mb-3">
+    <label style="margin-right: 10px">I am a: </label>
+    <label class="form-check-label">
+      <input
+        type="radio"
+        class="form-check-input"
+        value="male"
+        formControlName="gender"
+      />
+      Male
+    </label>
+
+    <label class="form-check-label">
+      <input
+        type="radio"
+        class="form-check-input"
+        value="female"
+        formControlName="gender"
+      />
+      Female
+    </label>
+  </div>
+
   <!-- 140 m 12 -->
   <app-text-input
     [formControlName]="'username'"
     lable="Usename"
+  ></app-text-input>
+
+  <app-text-input
+    [formControlName]="'knownAs'"
+    lable="Known as"
+  ></app-text-input>
+
+  <app-text-input
+    [formControlName]="'dateOfBirth'"
+    lable="Date of birth"
+  ></app-text-input>
+
+  <app-text-input [formControlName]="'city'" lable="City"></app-text-input>
+
+  <app-text-input
+    [formControlName]="'country'"
+    lable="Country"
   ></app-text-input>
 
   <app-text-input
