@@ -15,7 +15,7 @@ import {
   styleUrl: './text-input.component.css',
 })
 export class TextInputComponent implements ControlValueAccessor {
-  lable = input<string>('');
+  label = input<string>('');
   type = input<string>('text');
 
   //140 min 5
