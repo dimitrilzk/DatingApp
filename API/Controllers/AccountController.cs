@@ -2,6 +2,7 @@
 using API.DTOs;
 using API.Entities;
 using API.Interfaces;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
@@ -9,7 +10,7 @@ using System.Text;
 
 namespace API.Controllers
 {
-    public class AccountController(DataContext context, ITokenService tokenService) : BaseApiController
+    public class AccountController(DataContext context, ITokenService tokenService, IMapper mapper) : BaseApiController
     {
         //In the API Controllers we have an[ApiController] attribute.One of the features of this attribute
         //is automatic property binding to the parameters of the endpoints.The basic rules are if the argument
@@ -28,26 +29,25 @@ namespace API.Controllers
                 return BadRequest("Username is taken");
             }
 
-            return Ok();
-            //using var hmac = new HMACSHA512(); // usare lo using permette ri risparmiare memoria in quanto
-            ////appena si avrà finito di usare l'istanza della classe istanziata: new HMACSHA512() il metodo dispose
-            ////verrà chiamato e si occuperà di chiudere immediatamente lo scope e quindi non consumerà più memoria
+            using var hmac = new HMACSHA512(); // usare lo using permette ri risparmiare memoria in quanto
+            //appena si avrà finito di usare l'istanza della classe istanziata: new HMACSHA512() il metodo dispose
+            //verrà chiamato e si occuperà di chiudere immediatamente lo scope e quindi non consumerà più memoria
 
-            //var user = new AppUser
-            //{
-            //    UserName = registerDto.Username.ToLower(),
-            //    PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
-            //    PasswordSalt = hmac.Key
-            //};
+            var user = mapper.Map<AppUser>(registerDto);
 
-            //context.Users.Add(user);
-            //await context.SaveChangesAsync();
+            user.UserName = registerDto.Username.ToLower();
+            user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password));
+            user.PasswordSalt = hmac.Key;
 
-            //return new UserDto
-            //{
-            //    Username = user.UserName,
-            //    Token = tokenService.CreateToken(user)
-            //};
+            context.Users.Add(user);
+            await context.SaveChangesAsync();
+
+            return new UserDto
+            {
+                Username = user.UserName,
+                Token = tokenService.CreateToken(user),
+                KnownAs = user.KnownAs
+            };
         }
 
         [HttpPost("login")]
@@ -77,6 +77,7 @@ namespace API.Controllers
             return new UserDto
             {
                 Username = user.UserName,
+                KnownAs = user.KnownAs,
                 Token = tokenService.CreateToken(user),
                 PhotoUrl = user.Photos.FirstOrDefault(p => p.IsMain)?.Url
             };
