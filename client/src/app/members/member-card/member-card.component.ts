@@ -15,5 +15,5 @@ export class MemberCardComponent {
   //questo è il modo nuovo di riceve parametri in input da comp padri
   //in realtà l'input qui sotto è un extension method del signal
   //quindi nel template bisogna chimarlo es: member()
-  member = input.required<Member>();
+  member = input.required<Member>(); //todo
 }
