@@ -16,7 +16,6 @@ export class MemberListComponent implements OnInit {
   pageSize = 5;
 
   ngOnInit(): void {
-    //todo
     //questo refactor serve per evitare tante chiamate al back end ep 116
     if (!this.memberService.paginatedResult()) {
       this.loadMembers();
