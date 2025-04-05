@@ -21,7 +21,9 @@ export class MemberListComponent implements OnInit {
       this.loadMembers();
     }
   }
+
   loadMembers() {
+    //todo
     this.memberService.getMembers(this.pageNumber, this.pageSize);
   }
 
