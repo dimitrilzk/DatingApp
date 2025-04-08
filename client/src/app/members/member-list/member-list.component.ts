@@ -23,7 +23,6 @@ export class MemberListComponent implements OnInit {
   }
 
   loadMembers() {
-    //tdod
     this.memberService.getMembers(this.pageNumber, this.pageSize);
   }
 
