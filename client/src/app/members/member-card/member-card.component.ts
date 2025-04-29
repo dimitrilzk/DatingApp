@@ -16,4 +16,5 @@ export class MemberCardComponent {
   //in realtà l'input qui sotto è un extension method del signal
   //quindi nel template bisogna chimarlo es: member()
   member = input.required<Member>();
+  //todo
 }
