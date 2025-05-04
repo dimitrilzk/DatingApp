@@ -17,4 +17,3 @@ export class MemberCardComponent {
   //quindi nel template bisogna chimarlo es: member()
   member = input.required<Member>();
 }
-//todo
